@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+404 - Page Not Found
+{% endblock title %}
+
+{% block body %}
+<!-- Begin 404 Page Content -->
+    <div class="container-fluid d-flex align-items-center justify-content-center" style="
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: -50px; 
+    ">
+    <div class="row text-center">
+        <div class="col-12">
+            <h1 class="display-4 nt-5">404</h1>
+            <p class="lead">Oops! The page you're looking for doesn't exist.</p>
+            <a href="/" class="btn btn-primary">Go back to Home</a>
+        </div>
+    </div>
+</div>
+<!-- End 404 Page Content -->
+{% endblock body %}
