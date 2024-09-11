@@ -2,7 +2,7 @@ from django.urls import path
 
 import home.views as v
 from home.customViews import (authView)
-from home.views import (HomeView,PasswordResetView,Custom404View)
+from home.views import (HomeView,PasswordResetView)
 
 
 

@@ -39,6 +39,3 @@ class PasswordResetView(LoginRequiredMixin, View):
         return render(request, 'auth/reset_password.html')
 
 
-class Custom404View(View):
-    def get(self, request, exception=None):
-        return render(request, '404.html', status=404)
