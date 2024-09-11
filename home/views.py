@@ -37,3 +37,8 @@ class PasswordResetView(LoginRequiredMixin, View):
 
         # If there's an error, render the page again with error messages
         return render(request, 'auth/reset_password.html')
+
+
+class Custom404View(View):
+    def get(self, request, exception=None):
+        return render(request, '404.html', status=404)
