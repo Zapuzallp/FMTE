@@ -11,11 +11,17 @@ class LoginView(View):
     def post(self, request):
         username = request.POST.get('username')
         password = request.POST.get('password')
+        remember_me = request.POST.get('checkbox-signin')
+
 
         try:
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
+                if remember_me:
+                    request.session.set_expiry(7 * 24 * 60 * 60)  # 7 days
+                else:
+                    request.session.set_expiry(0)
                 return redirect('dashboard')
             messages.error(request, 'Invalid Credentials')
             return redirect("login")
