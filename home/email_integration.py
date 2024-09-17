@@ -16,7 +16,7 @@ def send_custom_email(subject, recipient_list, cc_emails_lists=None):
         email = EmailMultiAlternatives(
             subject=subject,
             body=text_content,
-            from_email='atal.upadhyay@zapuza.in',
+            from_email='',   #write your official email here
             to=recipient_list,
             cc=cc_emails_lists
         )

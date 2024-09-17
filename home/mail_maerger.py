@@ -17,7 +17,7 @@ async def send_bulk_emails(subject, email_template, context, recipient_list):
             email = EmailMultiAlternatives(
                 subject=subject,
                 body=html_content,
-                from_email='atal.upadhyay@zapuza.in',
+                from_email='',  #write your official email here
                 to=[recipient['email']],
             )
             email.attach_alternative(html_content, "text/html")
@@ -44,8 +44,8 @@ async def send_async_emails():
 
     # Recipient list with personalized data
     recipient_list = [
-        {'name': 'John Doe', 'email': 'upadhyayatal88@gmail.com'},
-        {'name': 'Jane Smith', 'email': 'upadhyayatal003@gmail.com'}
+        {'name': 'John Doe', 'email': ''},  # write other email here for testing
+        {'name': 'Jane Smith', 'email': ''}  # write other email here for testing
     ]
 
     # Context with other placeholder data
