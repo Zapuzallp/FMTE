@@ -2,8 +2,10 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
+from home.models import EmailErrorLog
 
-def send_custom_email(subject, recipient_list):
+
+def send_custom_email(subject, recipient_list, cc_emails_lists=None):
     try:
 
         html_content = render_to_string('email-inlined.html')
@@ -15,7 +17,8 @@ def send_custom_email(subject, recipient_list):
             subject=subject,
             body=text_content,
             from_email='atal.upadhyay@zapuza.in',
-            to=recipient_list
+            to=recipient_list,
+            cc=cc_emails_lists
         )
 
         # Attach HTML version
@@ -25,4 +28,10 @@ def send_custom_email(subject, recipient_list):
         email.send()
         return "Email sent successfully!"
     except Exception as e:
+
+        EmailErrorLog.objects.create(
+            subject=subject,
+            to_email=recipient_list,
+            error_message=str(e)
+        )
         return f"Failed to send email: {str(e)}"
