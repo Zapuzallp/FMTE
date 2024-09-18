@@ -11,10 +11,16 @@ class LoginView(View):
     def post(self, request):
         username = request.POST.get('username')
         password = request.POST.get('password')
+        remember_me = request.POST.get('checkbox-signin')
+
 
         try:
             user = authenticate(request, username=username, password=password)
             if user is not None:
+                if remember_me:
+                    request.session.set_expiry(7 * 24 * 60 * 60)  # 7 days
+                else:
+                    request.session.set_expiry(0)
                 login(request, user)
                 return redirect('dashboard')
             messages.error(request, 'Invalid Credentials')
@@ -27,6 +33,7 @@ class LoginView(View):
 class LogoutView(View):
     def get(self, request):
         if request.user.is_authenticated:
+            request.session.set_expiry(0)
             logout(request)
             messages.info(request, 'You have successfully Logged Out')
         return redirect('login')
