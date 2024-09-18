@@ -17,11 +17,11 @@ class LoginView(View):
         try:
             user = authenticate(request, username=username, password=password)
             if user is not None:
-                login(request, user)
                 if remember_me:
                     request.session.set_expiry(7 * 24 * 60 * 60)  # 7 days
                 else:
                     request.session.set_expiry(0)
+                login(request, user)
                 return redirect('dashboard')
             messages.error(request, 'Invalid Credentials')
             return redirect("login")
@@ -33,6 +33,7 @@ class LoginView(View):
 class LogoutView(View):
     def get(self, request):
         if request.user.is_authenticated:
+            request.session.set_expiry(0)
             logout(request)
             messages.info(request, 'You have successfully Logged Out')
         return redirect('login')

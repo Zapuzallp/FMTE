@@ -53,6 +53,16 @@
                                 <h4 class="text-dark-50 text-center pb-0 fw-bold">Sign In</h4>
                                 <p class="text-muted mb-4">Enter your email address and password to access admin panel.</p>
                             </div>
+                            {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                <li {% if message.tags == 'error' %} style="color: red; font-weight: bold;"{% endif %}>
+                                {{ message }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+
 
                             <form action="{% url 'login' %}" method="post">
                                 {% csrf_token %}
@@ -75,7 +85,7 @@
                                 <div class="mb-3 mb-3">
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" id="checkbox-signin"
-                                               name="checkbox-signin" value="true" checked>
+                                               name="checkbox-signin" value="false" >
                                         <label class="form-check-label" for="checkbox-signin">Remember me</label>
                                     </div>
                                 </div>
