@@ -67,9 +67,9 @@ LOGGING = {
 SECRET_KEY = 'django-insecure-2=(%&y1yj7vq00@8#*t^1afnt_x@$c5ix-8kdxh4lv2gh52%0c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -181,6 +181,6 @@ EMAIL_HOST = 'smtp.hostinger.com'  # For SMTP host
 EMAIL_USE_SSL = False
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
+EMAIL_HOST_USER = 'subhashri.behera@zapuza.in' #config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = 'Ruchi@9938' #config('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = 'subhashri.behera@zapuza.in' #config('DEFAULT_FROM_EMAIL')
