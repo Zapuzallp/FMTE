@@ -7,6 +7,10 @@ from django.contrib.auth import update_session_auth_hash
 from django.conf import settings
 import logging.config
 
+
+from django.views.generic import ListView,DetailView
+from .models import Client
+
 # Apply logging configuration
 logging.config.dictConfig(settings.LOGGING)
 info_logger = logging.getLogger('info_logger')
@@ -55,3 +59,16 @@ class PasswordResetView(LoginRequiredMixin, View):
 
         # If there's an error, render the page again with error messages
         return render(request, 'auth/reset_password.html')
+
+class ClientListView(ListView):
+    model = Client
+    template_name = 'client_list.html'
+    context_object_name = 'clients'
+
+
+class ClientDetailView(DetailView):
+    model = Client
+    template_name = 'client_detail.html'
+    context_object_name = 'client'
+    slug_field = 'client_id'
+    slug_url_kwarg = 'client_id'

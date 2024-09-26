@@ -9,3 +9,13 @@ class EmailErrorLog(models.Model):
 
     class Meta:
         verbose_name_plural = "Email Error Logs"
+
+
+class Client(models.Model):
+    client_id = models.CharField(max_length=100, unique=True)
+    client_name = models.CharField(max_length=255)
+    contact_person_name = models.CharField(max_length=255, blank=True, null=True)
+    industry = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return self.client_name
