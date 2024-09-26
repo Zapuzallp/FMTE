@@ -66,11 +66,11 @@ class Director(models.Model):
     email = models.EmailField(validators=[EmailValidator(message='Enter a valid email address.')])
     address = models.TextField()
     pan_no = models.CharField(max_length=10, unique=True, validators=[RegexValidator(regex=r'^[A-Z]{5}[0-9]{4}[A-Z]{1}$', message='Enter a valid PAN number.')])
-    tan_no = models.CharField(max_length=10, blank=True, null=True, validators=[RegexValidator(regex=r'^[A-Z]{4}[0-9]{5}[A-Z]{1}$', message='Enter a valid TAN number.')])
+    tan_no = models.CharField(max_length=10, validators=[RegexValidator(regex=r'^[A-Z]{4}[0-9]{5}[A-Z]{1}$', message='Enter a valid TAN number.')])
     aadhar_no = models.CharField(max_length=12, validators=[RegexValidator(regex=r'^\d{12}$', message='Enter a valid 12-digit Aadhar number.')])
     din_no = models.CharField(max_length=8, validators=[RegexValidator(regex=r'^\d{8}$', message='Enter a valid 8-digit DIN number.')])
     start_date = models.DateField()
-    exit_date = models.DateField(null=True)
+    exit_date = models.DateField()
 
     def __str__(self):
         return self.name
