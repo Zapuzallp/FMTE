@@ -1,5 +1,6 @@
 from django.contrib import admin
-from home.models import EmailErrorLog, Company, ContactPerson, Director, DirectorCompanyMapping
+from home.models import EmailErrorLog
+from home.models import Employee
 
 # Register the model in the admin panel
 @admin.register(EmailErrorLog)
@@ -10,7 +11,6 @@ class EmailErrorLogAdmin(admin.ModelAdmin):
     ordering = ('-timestamp',)
 
 
-admin.site.register(Company)
-admin.site.register(ContactPerson)
-admin.site.register(Director)
-admin.site.register(DirectorCompanyMapping)
+@admin.register(Employee)
+class EmployeeAdmin(admin.ModelAdmin):
+    list_display = ['fathers_name', 'position', 'status', 'date_of_joining']
