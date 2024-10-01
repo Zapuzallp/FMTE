@@ -60,15 +60,17 @@ class PasswordResetView(LoginRequiredMixin, View):
         # If there's an error, render the page again with error messages
         return render(request, 'auth/reset_password.html')
 
-class ClientListView(ListView):
+class ClientListView(LoginRequiredMixin,ListView):
     model = Client
     template_name = 'client_list.html'
     context_object_name = 'clients'
+    login_url = '/accounts/login/'
 
 
-class ClientDetailView(DetailView):
+class ClientDetailView(LoginRequiredMixin,DetailView):
     model = Client
     template_name = 'client_detail.html'
     context_object_name = 'client'
     slug_field = 'client_id'
     slug_url_kwarg = 'client_id'
+    login_url = '/accounts/login/'

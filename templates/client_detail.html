@@ -1,33 +1,141 @@
-{% extends "client_base.html" %}
 
-{% block title %}Client Details{% endblock %}
+{% extends "client_base.html" %}
+{%load static%}
+
+
+{% block title %}Client Details| Hyper - Responsive Bootstrap 5 Admin Dashboard{% endblock %}
 
 {% block content %}
-<div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5 position-relative">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-xxl-4 col-lg-5">
 
-                <!-- Card for Client Detail -->
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title text-center">Client Details</h4>
-                        <p><strong>Client ID:</strong> {{ client.client_id }}</p>
-                        <p><strong>Client Name:</strong> {{ client.client_name }}</p>
-                        <p><strong>Contact Person Name:</strong> {{ client.contact_person_name|default:"N/A" }}</p>
-                        <p><strong>Industry:</strong> {{ client.industry|default:"N/A" }}</p>
+                <!-- Start Content-->
+                <div class="container-fluid">
 
-                        <div class="text-center mt-4">
-                            <a href="{% url 'client_list' %}" class="btn btn-primary">Back to Client List</a>
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
+                                        <li class="breadcrumb-item active">Profile</li>
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">Profile</h4>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- End Client Detail Card -->
+                    <!-- end page title -->
 
-            </div> <!-- end col -->
-        </div>
-        <!-- end row -->
-    </div>
-    <!-- end container -->
-</div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <!-- Profile -->
+                            <div class="card bg-primary">
+                                <div class="card-body profile-user-box">
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <div class="row align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="avatar-lg">
+                                                        <img src={% static "assets/images/users/avatar-1.jpg" %} alt="{{ client.client_name }} image" class="rounded-circle img-thumbnail">
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div>
+                                                        <h4 class="mt-1 mb-1 text-white">{{ client.client_name }} </h4>
+                                                        <p class="font-13 text-white-50"> {{ client.client_id }}</p>
+                                                        <p class="font-13 text-white-50"> {{ client.company_name|default:"N/A" }}</p>
+                                                        <p class="font-13 text-white-50"> {{ client.industry|default:"N/A" }}</p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!-- end col-->
+
+                                        <div class="col-sm-4">
+                                            <div class="text-center mt-sm-0 mt-3 text-sm-end">
+                                                <button type="button" class="btn btn-light">
+                                                    <i class="mdi mdi-account-edit me-1"></i> Edit Profile
+                                                </button>
+                                            </div>
+                                        </div> <!-- end col-->
+                                    </div> <!-- end row -->
+
+                                </div> <!-- end card-body/ profile-user-box-->
+                            </div><!--end profile/ card -->
+                        </div> <!-- end col-->
+                    </div>
+                    <!-- end row -->
+
+
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <!-- Personal-Information -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="header-title mt-0 mb-3">Client Information</h4>
+                                    <p class="text-muted font-13">
+                                        Hye, I’m {{client.client_name}} from {{client.company_name}} residing in this beautiful world. I create websites and mobile apps with great UX and UI design. I have done work with big companies like Nokia, Google and Yahoo. Meet me or Contact me for any queries. One Extra line for filling space. Fill as many you want.
+                                    </p>
+
+                                    <hr />
+
+                                    <div class="text-start">
+                                        <p class="text-muted"><strong>Client ID :</strong> <span class="ms-2">{{client.client_id}}</span></p>
+                                        <p class="text-muted"><strong>Name :</strong> <span class="ms-2">{{client.client_name}}</span></p>
+
+                                        <p class="text-muted"><strong>Company Name:</strong><span class="ms-2">{{client.company_name}}</span></p>
+
+                                        <p class="text-muted"><strong>Industry :</strong> <span class="ms-2">{{client.industry}}</span></p>
+
+                                        <p class="text-muted mb-0" id="tooltip-container"><strong>Elsewhere :</strong>
+                                            <a class="d-inline-block ms-2 text-muted" data-bs-container="#tooltip-container" data-bs-placement="top" data-bs-toggle="tooltip" href="" title="Facebook"><i class="mdi mdi-facebook"></i></a>
+                                            <a class="d-inline-block ms-2 text-muted" data-bs-container="#tooltip-container" data-bs-placement="top" data-bs-toggle="tooltip" href="" title="Twitter"><i class="mdi mdi-twitter"></i></a>
+                                            <a class="d-inline-block ms-2 text-muted" data-bs-container="#tooltip-container" data-bs-placement="top" data-bs-toggle="tooltip" href="" title="Skype"><i class="mdi mdi-skype"></i></a>
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Personal-Information -->
+
+                        </div> <!-- end col-->
+
+                    </div>
+                    <!-- end row -->
+
+                    <div class="card">
+                                <div class="card-body">
+                                    <h4 class="header-title mb-3">My Products</h4>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-centered mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Product</th>
+                                                    <th>Price</th>
+                                                    <th>Stock</th>
+                                                    <th>Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>ASOS Ridley High Waist</td>
+                                                    <td>$79.49</td>
+                                                    <td><span class="badge bg-primary">82 Pcs</span></td>
+                                                    <td>$6,518.18</td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div> <!-- end table responsive-->
+                                </div> <!-- end col-->
+                            </div> <!-- end row-->
+
+                </div> <!-- container -->
+
+
 {% endblock content %}
+
+

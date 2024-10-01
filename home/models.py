@@ -14,7 +14,7 @@ class EmailErrorLog(models.Model):
 class Client(models.Model):
     client_id = models.CharField(max_length=100, unique=True)
     client_name = models.CharField(max_length=255)
-    contact_person_name = models.CharField(max_length=255, blank=True, null=True)
+    company_name = models.CharField(max_length=255, blank=True)
     industry = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
