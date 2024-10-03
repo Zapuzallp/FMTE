@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Directors | Hyper - Responsive Bootstrap 5 Admin Dashboard
+{% endblock title %}
+
+{% block body %}
+
+<div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">eCommerce</a></li>
+                                        <li class="breadcrumb-item active">Directors</li>
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">Directors</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row mb-2">
+                                        <div class="col-sm-5">
+                                            <a href="javascript:void(0);" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Clients</a>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <div class="text-sm-end">
+                                                <button type="button" class="btn btn-success mb-2 me-1"><i class="mdi mdi-cog"></i></button>
+                                                <button type="button" class="btn btn-light mb-2 me-1">Import</button>
+                                                <button type="button" class="btn btn-light mb-2">Export</button>
+                                            </div>
+                                        </div><!-- end col-->
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input" id="customCheck1">
+                                                            <label class="form-check-label" for="customCheck1">&nbsp;</label>
+                                                        </div>
+                                                    </th>
+                                                    <th>Director Name</th>
+                                                    <th>Director Email</th>
+                                                    <th>Address</th>
+                                                    <th>PAN NO</th>
+                                                    <th>TAN NO</th>
+                                                    <th>AADHAR NO</th>
+                                                    <th>DIN NO</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for director in director %}
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input" id="customCheck2">
+                                                            <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                                        </div>
+                                                    </td>
+                                                    <td >
+                                                        {{ director.name }}
+                                                    </td>
+                                                    <td>
+                                                        {{ director.email }}
+                                                    </td>
+                                                    <td>
+                                                        {{ director.address|default:"N/A" }}
+                                                    </td>
+                                                    <td>
+                                                        {{ director.pan_no|default:"N/A" }}
+                                                    </td>
+
+                                                    <td>
+                                                        {{ director.tan_no|default:"N/A" }}
+                                                    </td>
+
+                                                    <td>
+                                                        {{ director.aadhar_no|default:"N/A" }}
+                                                    </td>
+                                                    <td>
+                                                        {{ director.din_no|default:"N/A" }}
+                                                    </td>
+
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div> <!-- end card-body-->
+                            </div> <!-- end card-->
+                        </div> <!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+{% endblock body %}

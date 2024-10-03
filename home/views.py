@@ -6,6 +6,9 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.conf import settings
 import logging.config
+from django.views.generic import ListView,DetailView
+from .models import Company,Director
+from django.contrib.auth.models import User
 
 # Apply logging configuration
 logging.config.dictConfig(settings.LOGGING)
@@ -55,3 +58,26 @@ class PasswordResetView(LoginRequiredMixin, View):
 
         # If there's an error, render the page again with error messages
         return render(request, 'auth/reset_password.html')
+
+
+class ClientListView(LoginRequiredMixin,ListView):
+    model = Company
+    template_name = 'clients_list.html'
+    context_object_name = 'company'
+    login_url = '/accounts/login/'
+
+
+class ClientDetailView(LoginRequiredMixin,DetailView):
+    model = Company
+    template_name = 'clients_details.html'
+    context_object_name = 'company'
+    slug_field = 'company_id'
+    slug_url_kwarg = 'company_id'
+    login_url = '/accounts/login/'
+
+
+class DirectorsListView(LoginRequiredMixin,ListView):
+    model =Director
+    template_name = 'directors.html'
+    context_object_name = 'director'
+    login_url = '/accounts/login/'
