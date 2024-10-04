@@ -57,8 +57,10 @@
             <li class="side-nav-title">Apps</li>
             <ul class="side-nav">
                 <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#sidebarCompanies" role="button" aria-expanded="false" aria-controls="sidebarCompanies" class="side-nav-link">
-                        <i class="uil-building"></i>
+                <a data-bs-toggle="collapse" href="#sidebarCompanies" role="button" aria-expanded="false" aria-controls="sidebarCompanies" class="side-nav-link"
+                   onkeydown="if (event.key === 'Enter' || event.key === ' ') { this.click(); event.preventDefault(); }">
+
+                    <i class="uil-building"></i>
                         <span> Companies </span>
                         <span class="menu-arrow"></span>
                     </a>
