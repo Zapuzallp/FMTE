@@ -89,7 +89,7 @@
                                         <p class="text-muted"><strong>Email :</strong> <span class="ms-2">{{ company.email|default:"N/A" }}</span></p>
                                         <p class="text-muted"><strong>Phone Number :</strong> <span class="ms-2">{{ company.phone_number|default:"N/A" }}</span></p>
                                         <p class="text-muted"><strong>Address :</strong> <span class="ms-2">{{ company.address|default:"N/A" }}, {{ company.city }}, {{ company.state }}, {{ company.country }} - {{ company.zip_code }}</span></p>
-                                        <p class="text-muted"><strong>Website :</strong> <span class="ms-2"><a href="{{ company.website }}" target="_blank">{{ company.website }}</a></span></p>
+                                        <p class="text-muted"><strong>Website :</strong> <span class="ms-2"><a href="{{ company.website }}" target="_blank" rel="noopener">{{ company.website }}</a></span></p>
                                         <p class="text-muted"><strong>PAN Number :</strong> <span class="ms-2">{{ company.pan_number|default:"N/A" }}</span></p>
                                         <p class="text-muted"><strong>TAN Number :</strong> <span class="ms-2">{{ company.tan_number|default:"N/A" }}</span></p>
                                         <p class="text-muted"><strong>Registration Date :</strong> <span class="ms-2">{{ company.registration_date|date:"Y-m-d" }}</span></p>
