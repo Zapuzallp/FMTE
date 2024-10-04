@@ -64,9 +64,23 @@ Lab Vision Home V-1.0
                 <td>{{ arn.arn_number }}</td>
                 <td id="status-{{ arn.arn_number }}">{{ arn.current_status }}</td>
                 <td>
-                    <i class="fas fa-eye" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#arnModal"
-                       onclick="populateModal('{{ arn.sl_no }}', '{{ arn.trade_name }}', '{{ arn.arn_number }}', '{{ arn.gstn }}', '{{ arn.purpose }}', '{{ arn.dated }}', '{{ arn.assigned_to }}', '{{ arn.reply_due_date }}', '{{ arn.current_status }}')"
-                       title="View Details"></i>
+                     <a href="#" class="fas fa-eye" style="cursor: pointer;"
+                   data-bs-toggle="modal"
+                   data-bs-target="#arnModal"
+                   onclick="populateModal({
+                       sl_no: '{{ arn.sl_no }}',
+                       trade_name: '{{ arn.trade_name }}',
+                       arn_number: '{{ arn.arn_number }}',
+                       gstn: '{{ arn.gstn }}',
+                       purpose: '{{ arn.purpose }}',
+                       dated: '{{ arn.dated }}',
+                       assigned_to: '{{ arn.assigned_to }}',
+                       reply_due_date: '{{ arn.reply_due_date }}',
+                       current_status: '{{ arn.current_status }}'
+                   })"
+                   title="View Details"
+                   aria-label="View ARN Details">
+                </a>
                 </td>
             </tr>
             {% endfor %}
@@ -114,7 +128,19 @@ Lab Vision Home V-1.0
 let currentArnNumber = '';
 let selectedStatus = '';
 
-function populateModal(sl_no, trade_name, arn_number, gstn, purpose, dated, assigned_to, reply_due_date, current_status) {
+function populateModal(data) {
+    const {
+        sl_no,
+        trade_name,
+        arn_number,
+        gstn,
+        purpose,
+        dated,
+        assigned_to,
+        reply_due_date,
+        current_status
+    } = data;
+
     currentArnNumber = arn_number;
     document.getElementById('modal-sl_no').innerText = sl_no;
     document.getElementById('modal-trade_name').innerText = trade_name;
@@ -126,6 +152,7 @@ function populateModal(sl_no, trade_name, arn_number, gstn, purpose, dated, assi
     document.getElementById('modal-reply_due_date').innerText = reply_due_date;
     document.getElementById('modal-current_status').innerText = current_status;
 }
+
 
 function setSelectedStatus(status) {
     selectedStatus = status;
