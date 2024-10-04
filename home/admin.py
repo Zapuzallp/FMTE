@@ -1,5 +1,5 @@
 from django.contrib import admin
-from home.models import EmailErrorLog, Employee, Company, ContactPerson, Director, DirectorCompanyMapping
+from home.models import EmailErrorLog, Employee, Company, ContactPerson, Director, DirectorCompanyMapping, Task, Comment
 
 # Register the model in the admin panel
 @admin.register(EmailErrorLog)
@@ -36,3 +36,11 @@ class DirectorAdmin(admin.ModelAdmin):
 @admin.register(DirectorCompanyMapping)
 class DirectorCompanyMappingAdmin(admin.ModelAdmin):
     list_display = ('company', 'Director')
+
+@admin.register(Task)
+class TaskAdmin(admin.ModelAdmin):
+    list_display = ('title', 'description', 'created_at', 'updated_at', 'status', 'priority', 'due_date')
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('task', 'text', 'created_at', 'updated_at', 'author')
