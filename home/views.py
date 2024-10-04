@@ -1,5 +1,4 @@
 from django.views import View
-from django.views.generic import ListView
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render,redirect
@@ -10,7 +9,6 @@ import logging.config
 from .models import ARNTracking
 from django.http import JsonResponse
 from datetime import datetime
-
 
 # Apply logging configuration
 logging.config.dictConfig(settings.LOGGING)
