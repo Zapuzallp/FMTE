@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 
 
@@ -56,6 +57,12 @@ class Employee(models.Model):
 
 
 class ARNTracking(models.Model):
+    STATUS_CHOICES = [
+        ('Rejected', 'Rejected'),
+        ('Progressing', 'Progressing'),
+        ('Accepted'     , 'Accepted'),
+        ('Pending', 'Pending'),
+    ]
     sl_no = models.PositiveIntegerField(unique=True)
     trade_name = models.CharField(max_length=255)
     gstn = models.CharField(
@@ -70,10 +77,23 @@ class ARNTracking(models.Model):
     dated = models.DateField()
     assigned_to = models.CharField(max_length=255)
     reply_due_date = models.DateField()
-    current_status = models.CharField(max_length=50)
+    current_status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='Pending')
 
     class Meta:
         verbose_name_plural = 'ARN Tracking Records'
 
     def __str__(self):
         return f"ARN Tracking: {self.sl_no}"
+
+
+class ArnCommand(models.Model):
+    arn_record = models.ForeignKey(ARNTracking, on_delete=models.CASCADE, related_name='commands')
+    content = models.TextField()
+    added_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = 'ARN Commands'
+
+    def __str__(self):
+        return f"Command for {self.arn_record.arn_number} by {self.added_by.username} on {self.timestamp}"

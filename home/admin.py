@@ -1,6 +1,6 @@
 from django.contrib import admin
 from home.models import EmailErrorLog
-from home.models import Employee, ARNTracking
+from home.models import Employee, ARNTracking, ArnCommand
 
 # Register the model in the admin panel
 @admin.register(EmailErrorLog)
@@ -18,8 +18,15 @@ class EmployeeAdmin(admin.ModelAdmin):
 
 @admin.register(ARNTracking)
 class ARNTrackingAdmin(admin.ModelAdmin):
-    list_display = ('sl_no', 'trade_name', 'gstn', 'arn_number', 'dated', 'assigned_to', 'reply_due_date', 'current_status')
+    list_display = ( 'trade_name', 'gstn', 'arn_number', 'dated', 'assigned_to', 'reply_due_date', 'current_status')
     search_fields = ('trade_name', 'gstn', 'arn_number')
-    list_filter = ('dated', 'reply_due_date', 'current_status')
-    ordering = ('-dated',)
+    list_filter = ('trade_name', 'dated', 'assigned_to', 'reply_due_date', 'current_status')
+    ordering = ('-dated','sl_no')
 
+
+@admin.register(ArnCommand)
+class ArnCommandAdmin(admin.ModelAdmin):
+    list_display = ('arn_record', 'content', 'added_by', 'timestamp')
+    search_fields = ('arn_record__arn_number', 'content', 'added_by__username')
+    list_filter = ('timestamp',)
+    ordering = ('-timestamp',)
