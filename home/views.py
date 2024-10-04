@@ -60,11 +60,14 @@ class PasswordResetView(LoginRequiredMixin, View):
         return render(request, 'auth/reset_password.html')
 
 
+LOGIN_URL = '/accounts/login/'
+
+
 class ClientListView(LoginRequiredMixin,ListView):
     model = Company
     template_name = 'clients_list.html'
     context_object_name = 'company'
-    login_url = '/accounts/login/'
+    login_url = LOGIN_URL
 
 
 class ClientDetailView(LoginRequiredMixin,DetailView):
@@ -73,11 +76,11 @@ class ClientDetailView(LoginRequiredMixin,DetailView):
     context_object_name = 'company'
     slug_field = 'company_id'
     slug_url_kwarg = 'company_id'
-    login_url = '/accounts/login/'
+    login_url = LOGIN_URL
 
 
 class DirectorsListView(LoginRequiredMixin,ListView):
     model =Director
     template_name = 'directors.html'
     context_object_name = 'director'
-    login_url = '/accounts/login/'
+    login_url = LOGIN_URL
