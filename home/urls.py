@@ -4,6 +4,8 @@ import home.views as v
 from home.customViews import (authView)
 from home.views import (HomeView, Custom404View)
 from home.views import (HomeView,PasswordResetView,ARNTrackingListView)
+from home.views import (HomeView,PasswordResetView,ClientListView,ClientDetailView,DirectorsListView)
+
 
 urlpatterns = [
     path('', HomeView.as_view(), name='dashboard'),
@@ -11,6 +13,9 @@ urlpatterns = [
     path('accounts/logout/', authView.LogoutView.as_view(), name='logout'),
     path('reset-password/', PasswordResetView.as_view(), name='password_reset'),
     path('arn-tracking/',ARNTrackingListView.as_view(), name='arn_tracking_list'),
+    path('clients/', ClientListView.as_view(), name='client_list'),
+    path('clients/<str:company_id>/', ClientDetailView.as_view(), name='client_detail'),
+    path('directors/', DirectorsListView.as_view(), name='directors_list'),
 ]
 
 # Custom 404 handler

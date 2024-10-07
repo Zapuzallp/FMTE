@@ -9,6 +9,9 @@ import logging.config
 from .models import ARNTracking
 from django.http import JsonResponse
 from datetime import datetime
+from django.views.generic import ListView,DetailView
+from .models import Company,Director
+from django.contrib.auth.models import User
 
 # Apply logging configuration
 logging.config.dictConfig(settings.LOGGING)
@@ -112,3 +115,29 @@ class ARNTrackingListView(LoginRequiredMixin, View):
         except Exception as e:
             error_logger.error('Failed to update ARN status for ARN number %s: %s', arn_number, str(e))
             return JsonResponse({'message': 'Internal server error'}, status=500)  # Internal server error
+
+
+LOGIN_URL = '/accounts/login/'
+
+
+class ClientListView(LoginRequiredMixin,ListView):
+    model = Company
+    template_name = 'clients_list.html'
+    context_object_name = 'company'
+    login_url = LOGIN_URL
+
+
+class ClientDetailView(LoginRequiredMixin,DetailView):
+    model = Company
+    template_name = 'clients_details.html'
+    context_object_name = 'company'
+    slug_field = 'company_id'
+    slug_url_kwarg = 'company_id'
+    login_url = LOGIN_URL
+
+
+class DirectorsListView(LoginRequiredMixin,ListView):
+    model =Director
+    template_name = 'directors.html'
+    context_object_name = 'director'
+    login_url = LOGIN_URL
