@@ -1,5 +1,5 @@
 from django.contrib import admin
-from home.models import EmailErrorLog, Employee, Company, ContactPerson, Director, DirectorCompanyMapping, ARNTracking, ArnCommand
+from home.models import EmailErrorLog, Employee, Company, ContactPerson, Director, DirectorCompanyMapping, ARNTracking, ArnCommand, Task, Comment
 
 
 # Register the model in the admin panel
@@ -53,3 +53,12 @@ class ArnCommandAdmin(admin.ModelAdmin):
     search_fields = ('arn_record__arn_number', 'content', 'added_by__username')
     list_filter = ('timestamp',)
     ordering = ('-timestamp',)
+
+
+@admin.register(Task)
+class TaskAdmin(admin.ModelAdmin):
+    list_display = ('title', 'description', 'created_at', 'updated_at', 'status', 'priority', 'due_date')
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('task', 'text', 'created_at', 'updated_at', 'author')
