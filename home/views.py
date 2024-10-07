@@ -131,8 +131,8 @@ class ClientDetailView(LoginRequiredMixin,DetailView):
     model = Company
     template_name = 'clients_details.html'
     context_object_name = 'company'
-    slug_field = 'company_id'
-    slug_url_kwarg = 'company_id'
+    slug_field = 'id'
+    slug_url_kwarg = 'id'
     login_url = LOGIN_URL
 
 

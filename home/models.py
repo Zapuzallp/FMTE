@@ -57,7 +57,6 @@ class Employee(models.Model):
 
 
 class Company(models.Model):
-    company_id = models.CharField(max_length=100, unique=True)
     name = models.CharField(max_length=255)
     company_name = models.CharField(max_length=255)
     email = models.EmailField(validators=[EmailValidator(message="Enter a valid email address.")])

@@ -44,7 +44,7 @@
                                                     <div>
 
                                                         <h4 class="mt-1 mb-1 text-white">{{ company.company_name }}</h4>
-                                                        <p class="font-13 text-white-50"> {{ company.company_id }}</p>
+                                                        <p class="font-13 text-white-50"> {{ company.id }}</p>
                                                         <p class="font-13 text-white-50"> {{ company.name|default:"N/A" }}</p>
                                                         <p class="font-13 text-white-50"> {{ company.email|default:"N/A" }}</p>
                                                         <p class="font-13 text-white-50"> {{ company.website|default:"N/A" }} </p>
@@ -82,7 +82,7 @@
                                     <hr/>
 
                                     <div class="text-start">
-                                        <p class="text-muted"><strong>Company ID :</strong> <span class="ms-2">{{ company.company_id }}</span></p>
+                                        <p class="text-muted"><strong>Company ID :</strong> <span class="ms-2">{{ company.id }}</span></p>
                                         <p class="text-muted"><strong>Contact Person :</strong> <span class="ms-2">{{ company.name|default:"N/A" }}</span></p>
                                         <p class="text-muted"><strong>Company Name :</strong><span class="ms-2">{{ company.company_name }}</span></p>
                                         <p class="text-muted"><strong>Industry :</strong> <span class="ms-2">{{ company.industry|default:"N/A" }}</span></p>

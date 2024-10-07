@@ -14,7 +14,7 @@ urlpatterns = [
     path('reset-password/', PasswordResetView.as_view(), name='password_reset'),
     path('arn-tracking/',ARNTrackingListView.as_view(), name='arn_tracking_list'),
     path('clients/', ClientListView.as_view(), name='client_list'),
-    path('clients/<str:company_id>/', ClientDetailView.as_view(), name='client_detail'),
+    path('clients/<str:id>/', ClientDetailView.as_view(), name='client_detail'),
     path('directors/', DirectorsListView.as_view(), name='directors_list'),
 ]
 
