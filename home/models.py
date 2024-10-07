@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.core.validators import RegexValidator, EmailValidator
-from django.utils import timezone
 
 
 class EmailErrorLog(models.Model):
@@ -132,46 +131,51 @@ class DirectorCompanyMapping(models.Model):
 
     class Meta:
         verbose_name_plural = "Director Company Mapping"
-class Task(models.Model):
+
+
+
+class ARNTracking(models.Model):
     STATUS_CHOICES = [
+        ('Rejected', 'Rejected'),
+        ('Progressing', 'Progressing'),
+        ('Accepted'     , 'Accepted'),
         ('Pending', 'Pending'),
-        ('In Progress', 'In Progress'),
-        ('Completed', 'Completed'),
-
     ]
-
-    PRIORITY_CHOICES = [
-        ('Low', 'Low'),
-        ('Medium', 'Medium'),
-        ('High', 'High'),
-
-    ]
-
-    title = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
-    priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES)
-    assignees = models.ManyToManyField(User, related_name='tasks', blank=True)
-    due_date = models.DateField(null=True, blank=True)
-
-    def __str__(self):
-        return self.title
+    sl_no = models.PositiveIntegerField(unique=True)
+    trade_name = models.CharField(max_length=255)
+    gstn = models.CharField(
+        max_length=15,
+        validators=[RegexValidator(
+            regex=r'^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$',
+            message="Invalid GSTN format"
+        )]
+    )
+    purpose = models.TextField()
+    arn_number = models.CharField(max_length=50, unique=True)
+    dated = models.DateField()
+    assigned_to = models.CharField(max_length=255)
+    reply_due_date = models.DateField()
+    current_status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='Pending')
 
     class Meta:
-        verbose_name_plural = "Tasks"
-
-
-class Comment(models.Model):
-    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='comments')
-    text = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+        verbose_name_plural = 'ARN Tracking Records'
 
     def __str__(self):
-        return f"Comment by {self.author} on {self.task.title}"
+        return f"ARN Tracking: {self.sl_no}"
+
+
+class ArnCommand(models.Model):
+    arn_record = models.ForeignKey(ARNTracking, on_delete=models.CASCADE, related_name='commands')
+    content = models.TextField()
+    added_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name_plural = "Comments"
+        verbose_name_plural = 'ARN Commands'
+
+    def __str__(self):
+        return f"Command for {self.arn_record.arn_number} by {self.added_by.username} on {self.timestamp}"
+
+
+
+
