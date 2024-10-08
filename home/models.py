@@ -105,6 +105,7 @@ class ContactPerson(models.Model):
 
 
 class Director(models.Model):
+    d_id = models.CharField(max_length=15)
     name = models.CharField(max_length=255)
     email = models.EmailField(validators=[EmailValidator(message='Enter a valid email address.')])
     address = models.TextField()

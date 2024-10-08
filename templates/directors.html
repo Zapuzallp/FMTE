@@ -53,7 +53,9 @@ Directors | Hyper - Responsive Bootstrap 5 Admin Dashboard
                                                             <label class="form-check-label" for="customCheck1">&nbsp;</label>
                                                         </div>
                                                     </th>
+                                                    <th>Director ID</th>
                                                     <th>Director Name</th>
+                                                    <th>Company</th>
                                                     <th>Director Email</th>
                                                     <th>Address</th>
                                                     <th>PAN NO</th>
@@ -63,7 +65,7 @@ Directors | Hyper - Responsive Bootstrap 5 Admin Dashboard
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            {% for director in director %}
+                                            {% for director in directors %}
                                                 <tr>
                                                     <td>
                                                         <div class="form-check">
@@ -71,9 +73,21 @@ Directors | Hyper - Responsive Bootstrap 5 Admin Dashboard
                                                             <label class="form-check-label" for="customCheck2">&nbsp;</label>
                                                         </div>
                                                     </td>
-                                                    <td >
+                                                    <td class="table-user">
+                                                        <a href="{% url 'director_detail' director.d_id %}">{{ director.d_id }}</a>
+                                                    </td>
+                                                    <td>
                                                         {{ director.name }}
                                                     </td>
+
+                                                    <td>
+                                                        {% for mapping in director.directorcompanymapping_set.all %}
+                                                            {{ mapping.company.company_name }}{% if not forloop.last %}, {% endif %}
+                                                        {% empty %}
+                                                            No Company Assigned
+                                                        {% endfor %}
+                                                    </td>
+
                                                     <td>
                                                         {{ director.email }}
                                                     </td>

@@ -1,165 +1,595 @@
 {% extends "base.html" %}
 {%load static%}
-
-
 {% block title %}Client Details| Hyper - Responsive Bootstrap 5 Admin Dashboard{% endblock title %}
-
 {% block body %}
 
-                <!-- Start Content-->
-                <div class="container-fluid">
+<!-- Start Content-->
+<div class="content">
+    <!-- Start Content-->
+    <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Company</li>
+                        </ol>
+                    </div>
+                    <h4 class="page-title">Company</h4>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
 
-                    <!-- start page title -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="page-title-box">
-                                <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
-                                        <li class="breadcrumb-item active">Profile</li>
-                                    </ol>
+        <div class="row">
+            <div class="col-xxl-12">
+                <div class="row">
+                    <div class="col-sm-6 col-xl-3 mb-3">
+                        <div class="card mb-0 h-100">
+                            <div class="card-body">
+                                <h4 class="header-title">Director</h4>
+                                <h5 class="text-muted fw-normal mt-0" title="Campaign Sent">
+                                    <ul>
+                                    {% for mapping in company.directorcompanymapping_set.all %}
+                                        <li>{{ mapping.Director.name }}</li>
+                                    {% empty %}
+                                        <li>No directors associated with this company.</li>
+                                    {% endfor %}
+                                </ul></h5>
+
+                                <div class="d-flex align-items-center mt-4">
+                                    <div class="flex-shrink-0">
+                                       <p>Total Directors:  {{ company.directorcompanymapping_set.count }}</p>
+                                    </div>
                                 </div>
-                                <h4 class="page-title">Profile</h4>
+                            </div> <!-- end card-body -->
+                        </div> <!-- end card -->
+                    </div> <!-- end col -->
+
+                    <div class="col-sm-6 col-xl-3 mb-3">
+                        <div class="card mb-0 h-100">
+                            <div class="card-body">
+                                <h4 class="header-title">Important Numbers</h4>
+                            </div> <!-- end card-body -->
+                        </div> <!-- end card -->
+                    </div> <!-- end col -->
+
+                    <div class="col-sm-6 col-xl-3 mb-3">
+                        <div class="card mb-0 h-100">
+                            <div class="card-body">
+                                <h4 class="header-title">Client Project</h4>
+                            </div> <!-- end card-body -->
+                        </div> <!-- end card -->
+                    </div> <!-- end col -->
+
+                    <div class="col-sm-6 col-xl-3 mb-3">
+                        <div class="card mb-0 h-100">
+                            <div class="card-body">
+                                <div
+                                    class="border-dashed border-2 border h-100 w-100 rounded d-flex align-items-center justify-content-center">
+                                    <a href="javascript:void(0);" class="text-center text-muted p-2"
+                                        data-bs-toggle="modal" data-bs-target="#CreateProject">
+                                        <i class="mdi mdi-plus h3 my-0"></i>
+                                        <h4 class="font-16 mt-1 mb-0 d-block">Add New Project</h4>
+                                    </a>
+                                </div>
+                            </div> <!-- end card-body -->
+                        </div> <!-- end card -->
+                    </div> <!-- end col -->
+                </div> <!-- end row -->
+            </div>
+        </div>
+
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        COMPANY INFORMATION
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="text-muted font-13">
+                                    Hye, I’m {{company.name}} from {{company.company_name}} residing in this beautiful
+                                    world. I create websites and mobile apps with great UX and UI design. I have done work
+                                    with big companies like Nokia, Google and Yahoo. Meet me or Contact me for any queries.
+                                    One Extra line for filling space. Fill as many you want.
+                                </p>
+
+                                <hr />
+
+                                <div class="text-start">
+                                    <p class="text-muted"><strong>Company ID :</strong> <span class="ms-2">{{ company.id}}</span></p>
+                                    <p class="text-muted"><strong>Contact Person :</strong> <span class="ms-2">{{company.name|default:"N/A" }}</span></p>
+                                    <p class="text-muted"><strong>Company Name :</strong><span class="ms-2">{{company.company_name }}</span></p>
+                                    <p class="text-muted"><strong>Industry :</strong> <span class="ms-2">{{company.industry|default:"N/A" }}</span></p>
+                                    <p class="text-muted"><strong>Email :</strong> <span class="ms-2">{{company.email|default:"N/A" }}</span></p>
+                                    <p class="text-muted"><strong>Phone Number :</strong> <span class="ms-2">{{company.phone_number|default:"N/A" }}</span></p>
+                                    <p class="text-muted"><strong>Address :</strong> <span class="ms-2">{{company.address|default:"N/A" }}, {{ company.city }}, {{ company.state }}, {{company.country }} - {{ company.zip_code }}</span></p>
+                                    <p class="text-muted"><strong>Website :</strong> <span class="ms-2"><a href="{{ company.website }}" target="_blank" rel="noopener">{{company.website }}</a></span></p>
+                                    <p class="text-muted"><strong>PAN Number :</strong> <span class="ms-2">{{company.pan_number|default:"N/A" }}</span></p>
+                                    <p class="text-muted"><strong>TAN Number :</strong> <span class="ms-2">{{company.tan_number|default:"N/A" }}</span></p>
+                                    <p class="text-muted"><strong>Registration Date :</strong> <span class="ms-2">{{company.registration_date|date:"Y-m-d" }}</span></p>
+                                    <p class="text-muted"><strong>Type of Business :</strong> <span class="ms-2">{{company.type_of_business|default:"N/A" }}</span></p>
+                                    <p class="text-muted"><strong>Nature of Business :</strong> <span class="ms-2">{{company.nature_of_business|default:"N/A" }}</span></p>
+                                    <p class="text-muted"><strong>Authorized Capital :</strong> <span class="ms-2">{{company.authorized_capital|floatformat:2 }}</span></p>
+                                    <p class="text-muted"><strong>Paid-up Capital :</strong> <span class="ms-2">{{company.paid_up_capital|floatformat:2 }}</span></p>
+                                    <p class="text-muted"><strong>Financial Year Start :</strong> <span class="ms-2">{{company.financial_year_start|date:"Y-m-d" }}</span></p>
+                                    <p class="text-muted"><strong>Financial Year End :</strong> <span class="ms-2">{{company.financial_year_end|date:"Y-m-d" }}</span></p>
+                                    <p class="text-muted"><strong>Audit Frequency :</strong> <span class="ms-2">{{company.audit_frequency|default:"N/A" }}</span></p>
+                                    <p class="text-muted">
+                                        <strong>Assigned To :</strong>
+                                        <span class="ms-2">
+                                            {% if company.Assignees.all %}
+                                            {% for assignee in company.Assignees.all %}
+                                            {{ assignee.username }}
+                                            {% if not forloop.last %}, {% endif %} <!-- Add a comma between usernames -->
+                                            {% endfor %}
+                                            {% else %}
+                                            N/A
+                                            {% endif %}
+                                        </span>
+                                    </p>
+                                    <p class="text-muted mb-0" id="tooltip-container"><strong>Elsewhere :</strong>
+                                        <a class="d-inline-block ms-2 text-muted" data-bs-container="#tooltip-container"
+                                            data-bs-placement="top" data-bs-toggle="tooltip" href="" title="Facebook"><i
+                                                class="mdi mdi-facebook"></i></a>
+                                        <a class="d-inline-block ms-2 text-muted" data-bs-container="#tooltip-container"
+                                            data-bs-placement="top" data-bs-toggle="tooltip" href="" title="Twitter"><i
+                                                class="mdi mdi-twitter"></i></a>
+                                        <a class="d-inline-block ms-2 text-muted" data-bs-container="#tooltip-container"
+                                            data-bs-placement="top" data-bs-toggle="tooltip" href="" title="Skype"><i
+                                                class="mdi mdi-skype"></i></a>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- end page title -->
+                </div>
+        </div>
+    </div>
 
-
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <!-- Profile -->
-                            <div class="card bg-primary">
-                                <div class="card-body profile-user-box">
-                                    <div class="row">
-                                        <div class="col-sm-8">
-                                            <div class="row align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="avatar-lg">
-                                                        <img src={% static "assets/images/users/avatar-1.jpg" %} alt="{{ company.name }}" class="rounded-circle img-thumbnail">
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div>
-
-                                                        <h4 class="mt-1 mb-1 text-white">{{ company.company_name }}</h4>
-                                                        <p class="font-13 text-white-50"> {{ company.id }}</p>
-                                                        <p class="font-13 text-white-50"> {{ company.name|default:"N/A" }}</p>
-                                                        <p class="font-13 text-white-50"> {{ company.email|default:"N/A" }}</p>
-                                                        <p class="font-13 text-white-50"> {{ company.website|default:"N/A" }} </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> <!-- end col-->
-
-                                        <div class="col-sm-4">
-                                            <div class="text-center mt-sm-0 mt-3 text-sm-end">
-                                                <button type="button" class="btn btn-light">
-                                                    <i class="mdi mdi-account-edit me-1"></i> Edit Profile
-                                                </button>
-                                            </div>
-                                        </div> <!-- end col-->
-                                    </div> <!-- end row -->
-
-                                </div> <!-- end card-body/ profile-user-box-->
-                            </div><!--end profile/ card -->
-                        </div> <!-- end col-->
+        <div class="row">
+            <div class="col-sm-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar-sm">
+                                    <span class="avatar-title bg-primary-lighten text-primary rounded">
+                                        <i class="mdi mdi-file-document-edit font-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="mt-0 mb-1">Active Projects</h5>
+                                <p class="mb-0">85</p>
+                            </div>
+                            <div class="dropdown float-end">
+                                <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="mdi mdi-dots-vertical"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">Today</a>
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">Yesterday</a>
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">Last Week</a>
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">Last Month</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <!-- end row -->
+                </div>
+            </div>
 
+            <div class="col-sm-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar-sm">
+                                    <span class="avatar-title bg-success-lighten text-success rounded">
+                                        <i class="mdi mdi-account-group font-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="mt-0 mb-1">Total Employees</h5>
+                                <p class="mb-0">32</p>
+                            </div>
+                            <div class="dropdown float-end">
+                                <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="mdi mdi-dots-vertical"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">Today</a>
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">Yesterday</a>
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">Last Week</a>
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">Last Month</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <!-- Personal-Information -->
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="header-title mt-0 mb-3">Company Information</h4>
-                                    <p class="text-muted font-13">
-                                        Hye, I’m {{company.name}} from {{company.company_name}} residing in this beautiful world. I create websites and mobile apps with great UX and UI design. I have done work with big companies like Nokia, Google and Yahoo. Meet me or Contact me for any queries. One Extra line for filling space. Fill as many you want.
-                                    </p>
+            <div class="col-sm-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar-sm">
+                                    <span class="avatar-title bg-info-lighten text-info rounded">
+                                        <i class="mdi mdi-account-star font-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="mt-0 mb-1">Project Reviews</h5>
+                                <p class="mb-0">40</p>
+                            </div>
+                            <div class="dropdown float-end">
+                                <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="mdi mdi-dots-vertical"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">Today</a>
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">Yesterday</a>
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">Last Week</a>
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">Last Month</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                                    <hr/>
+            <div class="col-sm-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar-sm">
+                                    <span class="avatar-title bg-warning-lighten text-warning rounded">
+                                        <i class="mdi mdi-folder-plus font-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="mt-0 mb-1">New Projects</h5>
+                                <p class="mb-0">25</p>
+                            </div>
+                            <div class="dropdown float-end">
+                                <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="mdi mdi-dots-vertical"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">Today</a>
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">Yesterday</a>
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">Last Week</a>
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">Last Month</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                                    <div class="text-start">
-                                        <p class="text-muted"><strong>Company ID :</strong> <span class="ms-2">{{ company.id }}</span></p>
-                                        <p class="text-muted"><strong>Contact Person :</strong> <span class="ms-2">{{ company.name|default:"N/A" }}</span></p>
-                                        <p class="text-muted"><strong>Company Name :</strong><span class="ms-2">{{ company.company_name }}</span></p>
-                                        <p class="text-muted"><strong>Industry :</strong> <span class="ms-2">{{ company.industry|default:"N/A" }}</span></p>
-                                        <p class="text-muted"><strong>Email :</strong> <span class="ms-2">{{ company.email|default:"N/A" }}</span></p>
-                                        <p class="text-muted"><strong>Phone Number :</strong> <span class="ms-2">{{ company.phone_number|default:"N/A" }}</span></p>
-                                        <p class="text-muted"><strong>Address :</strong> <span class="ms-2">{{ company.address|default:"N/A" }}, {{ company.city }}, {{ company.state }}, {{ company.country }} - {{ company.zip_code }}</span></p>
-                                        <p class="text-muted"><strong>Website :</strong> <span class="ms-2"><a href="{{ company.website }}" target="_blank" rel="noopener">{{ company.website }}</a></span></p>
-                                        <p class="text-muted"><strong>PAN Number :</strong> <span class="ms-2">{{ company.pan_number|default:"N/A" }}</span></p>
-                                        <p class="text-muted"><strong>TAN Number :</strong> <span class="ms-2">{{ company.tan_number|default:"N/A" }}</span></p>
-                                        <p class="text-muted"><strong>Registration Date :</strong> <span class="ms-2">{{ company.registration_date|date:"Y-m-d" }}</span></p>
-                                        <p class="text-muted"><strong>Type of Business :</strong> <span class="ms-2">{{ company.type_of_business|default:"N/A" }}</span></p>
-                                        <p class="text-muted"><strong>Nature of Business :</strong> <span class="ms-2">{{ company.nature_of_business|default:"N/A" }}</span></p>
-                                        <p class="text-muted"><strong>Authorized Capital :</strong> <span class="ms-2">{{ company.authorized_capital|floatformat:2 }}</span></p>
-                                        <p class="text-muted"><strong>Paid-up Capital :</strong> <span class="ms-2">{{ company.paid_up_capital|floatformat:2 }}</span></p>
-                                        <p class="text-muted"><strong>Financial Year Start :</strong> <span class="ms-2">{{ company.financial_year_start|date:"Y-m-d" }}</span></p>
-                                        <p class="text-muted"><strong>Financial Year End :</strong> <span class="ms-2">{{ company.financial_year_end|date:"Y-m-d" }}</span></p>
-                                        <p class="text-muted"><strong>Audit Frequency :</strong> <span class="ms-2">{{ company.audit_frequency|default:"N/A" }}</span></p>
-                                        <p class="text-muted">
-                                            <strong>Assigned To :</strong>
-                                            <span class="ms-2">
-                                                {% if company.Assignees.all %}
-                                                    {% for assignee in company.Assignees.all %}
-                                                        {{ assignee.username }}
-                                                        {% if not forloop.last %}, {% endif %} <!-- Add a comma between usernames -->
-                                                    {% endfor %}
-                                                {% else %}
-                                                    N/A
-                                                {% endif %}
-                                            </span>
-                                        </p>
+        <div class="row">
+            <div class="col-xxl-6">
+                <div class="card card-h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4 class="header-title">Project Overview</h4>
+                        <div class="dropdown">
+                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="mdi mdi-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Today</a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Yesterday</a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Last Week</a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Last Month</a>
+                            </div>
+                        </div>
+                    </div>
 
-                                        <p class="text-muted mb-0" id="tooltip-container"><strong>Elsewhere :</strong>
-                                            <a class="d-inline-block ms-2 text-muted" data-bs-container="#tooltip-container" data-bs-placement="top" data-bs-toggle="tooltip" href="" title="Facebook"><i class="mdi mdi-facebook"></i></a>
-                                            <a class="d-inline-block ms-2 text-muted" data-bs-container="#tooltip-container" data-bs-placement="top" data-bs-toggle="tooltip" href="" title="Twitter"><i class="mdi mdi-twitter"></i></a>
-                                            <a class="d-inline-block ms-2 text-muted" data-bs-container="#tooltip-container" data-bs-placement="top" data-bs-toggle="tooltip" href="" title="Skype"><i class="mdi mdi-skype"></i></a>
-                                        </p>
+                    <div class="card-body pt-0">
+                        <div class="row align-items-center">
+                            <div class="col-md-6 order-2 order-md-1">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="flex-shrink-0">
+                                        <i
+                                            class="mdi mdi-checkbox-blank-circle widget-icon rounded-circle bg-primary-lighten text-primary"></i>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5 class="fw-semibold mt-0 mb-1">Product Design</h5>
+                                        <ul class="list-inline mb-0 text-muted">
+                                            <li class="list-inline-item"><b>26</b> Total Projects</li>
+                                            <li class="list-inline-item"><i class="mdi mdi-circle-small"></i></li>
+                                            <li class="list-inline-item"><b>4</b> Employees</li>
+                                        </ul>
+                                    </div>
+                                </div>
 
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="flex-shrink-0">
+                                        <i
+                                            class="mdi mdi-checkbox-blank-circle widget-icon rounded-circle bg-danger-lighten text-danger"></i>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5 class="fw-semibold mt-0 mb-1">Web Development</h5>
+                                        <ul class="list-inline mb-0 text-muted">
+                                            <li class="list-inline-item"><b>30</b> Total Projects</li>
+                                            <li class="list-inline-item"><i class="mdi mdi-circle-small"></i></li>
+                                            <li class="list-inline-item"><b>5</b> Employees</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="flex-shrink-0">
+                                        <i
+                                            class="mdi mdi-checkbox-blank-circle widget-icon rounded-circle bg-success-lighten text-success"></i>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5 class="fw-semibold mt-0 mb-1">Illustration Design</h5>
+                                        <ul class="list-inline mb-0 text-muted">
+                                            <li class="list-inline-item"><b>12</b> Total Projects</li>
+                                            <li class="list-inline-item"><i class="mdi mdi-circle-small"></i></li>
+                                            <li class="list-inline-item"><b>3</b> Employees</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0">
+                                        <i
+                                            class="mdi mdi-checkbox-blank-circle widget-icon rounded-circle bg-warning-lighten text-warning"></i>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5 class="fw-semibold mt-0 mb-1">UI/UX Design</h5>
+                                        <ul class="list-inline mb-0 text-muted">
+                                            <li class="list-inline-item"><b>8</b> Total Projects</li>
+                                            <li class="list-inline-item"><i class="mdi mdi-circle-small"></i></li>
+                                            <li class="list-inline-item"><b>4</b> Employees</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Personal-Information -->
 
-                        </div> <!-- end col-->
-
+                            <div class="col-md-6 order-1 order-md-2">
+                                <div class="mb-3 mb-md-0">
+                                    <div id="project-overview-chart" class="apex-charts"
+                                        data-colors="#727cf5,#ff679b,#0acf97,#ffbc00">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <!-- end row -->
+                </div>
+            </div>
 
-                    <div class="card">
-                                <div class="card-body">
-                                    <h4 class="header-title mb-3">My Products</h4>
+            <div class="col-md-6 col-xxl-3">
+                <div class="card card-h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4 class="header-title mb-0">Daily Task</h4>
+                        <div>
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                <option selected>Today</option>
+                                <option value="1">Yesterday</option>
+                                <option value="2">Tomorrow</option>
+                            </select>
+                        </div>
+                    </div>
 
-                                    <div class="table-responsive">
-                                        <table class="table table-hover table-centered mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Product</th>
-                                                    <th>Price</th>
-                                                    <th>Stock</th>
-                                                    <th>Amount</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>ASOS Ridley High Waist</td>
-                                                    <td>$79.49</td>
-                                                    <td><span class="badge bg-primary">82 Pcs</span></td>
-                                                    <td>$6,518.18</td>
-                                                </tr>
+                    <div class="card-body py-0 mb-3" data-simplebar style="max-height: 304px;">
+                        <div class="border rounded p-2 mb-2">
+                            <ul class="list-inline mb-2">
+                                <li class="list-inline-item font-16 fw-semibold"><a href="javascript:void(0);"
+                                        class="text-reset">Landing Page Design</a></li>
+                                <li class="list-inline-item text-muted"><i class="mdi mdi-circle-small"></i></li>
+                                <li class="list-inline-item font-13 fw-semibold text-muted">2 Hrs ago</li>
+                            </ul>
+                            <p class="text-muted mb-0">Create a new landing page (Saas Product)</p>
+                            <p class="text-muted mb-0"><i class="mdi mdi-account-group me-1"></i> <b>5</b> People</p>
+                        </div>
+                        <div class="border rounded p-2 mb-2">
+                            <ul class="list-inline mb-2">
+                                <li class="list-inline-item font-16 fw-semibold"><a href="javascript:void(0);"
+                                        class="text-reset">Admin Dashboard</a></li>
+                                <li class="list-inline-item text-muted"><i class="mdi mdi-circle-small"></i></li>
+                                <li class="list-inline-item font-13 fw-semibold text-muted">3 Hrs ago</li>
+                            </ul>
+                            <p class="text-muted mb-0">Create a new Admin dashboard</p>
+                            <p class="text-muted mb-0"><i class="mdi mdi-account-group me-1"></i> <b>2</b> People</p>
+                        </div>
+                        <div class="border rounded p-2 mb-2">
+                            <ul class="list-inline mb-2">
+                                <li class="list-inline-item font-16 fw-semibold"><a href="javascript:void(0);"
+                                        class="text-reset">Client Work</a></li>
+                                <li class="list-inline-item text-muted"><i class="mdi mdi-circle-small"></i></li>
+                                <li class="list-inline-item font-13 fw-semibold text-muted">5 Hrs ago</li>
+                            </ul>
+                            <p class="text-muted mb-0">Create a new Power Project (Sktech design)</p>
+                            <p class="text-muted mb-0"><i class="mdi mdi-account-group me-1"></i> <b>2</b> People</p>
+                        </div>
+                        <div class="border rounded p-2 mb-2">
+                            <ul class="list-inline mb-2">
+                                <li class="list-inline-item font-16 fw-semibold"><a href="javascript:void(0);"
+                                        class="text-reset">UI/UX Design</a></li>
+                                <li class="list-inline-item text-muted"><i class="mdi mdi-circle-small"></i></li>
+                                <li class="list-inline-item font-13 fw-semibold text-muted">6 Hrs ago</li>
+                            </ul>
+                            <p class="text-muted mb-0">Create a new UI Kit in figma</p>
+                            <p class="text-muted mb-0"><i class="mdi mdi-account-group me-1"></i> <b>3</b> People</p>
+                        </div>
 
-                                            </tbody>
-                                        </table>
-                                    </div> <!-- end table responsive-->
-                                </div> <!-- end col-->
-                            </div> <!-- end row-->
+                        <div class="text-center">
+                            <i class="mdi mdi-dots-circle mdi-spin font-20 text-muted"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                </div> <!-- container -->
+            <div class="col-md-6 col-xxl-3">
+                <div class="card card-h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4 class="header-title mb-0">Team Members</h4>
+                        <div>
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                <option selected>Active</option>
+                                <option value="1">Offline</option>
+                            </select>
+                        </div>
+                    </div>
 
+                    <div class="card-body py-0 mb-3" data-simplebar style="max-height: 304px;">
+                        <div class="d-flex align-items-start">
+                            <img class="me-3 rounded-circle" src= "{% static 'assets/images/users/avatar-2.jpg' %}" width="40"
+                                alt="Generic placeholder image">
+                            <div class="w-100 overflow-hidden">
+                                <h5 class="mt-0 mb-1 fw-semibold"><a href="javascript:void(0);" class="text-reset">Risa
+                                        Pearson</a></h5>
+                                <ul class="list-inline mb-0 font-13">
+                                    <li class="list-inline-item">UI/UX Designer</li>
+                                    <li class="list-inline-item text-muted"><i class="mdi mdi-circle-small"></i></li>
+                                    <li class="list-inline-item text-muted">2.5 Year Experience</li>
+                                </ul>
+                            </div>
+                        </div>
 
+                        <div class="d-flex align-items-start mt-3">
+                            <img class="me-3 rounded-circle" src= "{% static 'assets/images/users/avatar-3.jpg' %}"" width="40"
+                                alt="Generic placeholder image">
+                            <div class="w-100 overflow-hidden">
+                                <h5 class="mt-0 mb-1 fw-semibold"><a href="javascript:void(0);"
+                                        class="text-reset">Margaret D. Evans</a></h5>
+                                <ul class="list-inline mb-0 font-13">
+                                    <li class="list-inline-item">PHP Developer</li>
+                                    <li class="list-inline-item text-muted"><i class="mdi mdi-circle-small"></i></li>
+                                    <li class="list-inline-item text-muted">2 Year Experience</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-start mt-3">
+                            <img class="me-3 rounded-circle" src= "{% static 'assets/images/users/avatar-4.jpg' %}"" width="40"
+                                alt="Generic placeholder image">
+                            <div class="w-100 overflow-hidden">
+                                <h5 class="mt-0 mb-1 fw-semibold"><a href="javascript:void(0);" class="text-reset">Bryan
+                                        J. Luellen</a></h5>
+                                <ul class="list-inline mb-0 font-13">
+                                    <li class="list-inline-item">Front end Developer</li>
+                                    <li class="list-inline-item text-muted"><i class="mdi mdi-circle-small"></i></li>
+                                    <li class="list-inline-item text-muted">1 Year Experience</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-start mt-3">
+                            <img class="me-3 rounded-circle" src= "{% static 'assets/images/users/avatar-5.jpg' %}" width="40"
+                                alt="Generic placeholder image">
+                            <div class="w-100 overflow-hidden">
+                                <h5 class="mt-0 mb-1 fw-semibold"><a href="javascript:void(0);"
+                                        class="text-reset">Kathryn S. Collier</a></h5>
+                                <ul class="list-inline mb-0 font-13">
+                                    <li class="list-inline-item">UI/UX Designer</li>
+                                    <li class="list-inline-item text-muted"><i class="mdi mdi-circle-small"></i></li>
+                                    <li class="list-inline-item text-muted">3 Year Experience</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end row -->
+    </div> <!-- container -->
+ <!-- Modal -->
+<div class="modal fade" id="CreateProject" tabindex="-1" aria-labelledby="CreateProjectLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="CreateProjectLabel">Add New Project</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-3">
+                    <div class="mb-3">
+                        <label for="projectName" class="form-label">Project Name</label>
+                        <input type="text" class="form-control" id="projectName" placeholder="Add project name...">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput" class="form-label">Add Task</label>
+                        <select class="form-select select2" data-toggle="dropdown" aria-label="Default select example">
+                            <option selected>Add a task...</option>
+                            <option value="1">Landing Page</option>
+                            <option value="2">Admin Dashboards</option>
+                            <option value="3">Admin Pages</option>
+                            <option value="4">UX/UI Design</option>
+                            <option value="5">Client Work</option>
+                            <option value="6">Other Work</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="AssignTask" class="form-label">Assign Task</label>
+                        <select class="select2 form-control select2-multiple" data-toggle="select2" multiple="multiple" data-placeholder="Choose ...">
+                            <optgroup label="UX Designer">
+                                <option value="AD">Andrea</option>
+                                <option value="DL">Danielle</option>
+                                <option value="JH">John</option>
+                            </optgroup>
+                            <optgroup label="Developer">
+                                <option value="ST">Steven</option>
+                                <option value="MC">Michael</option>
+                            </optgroup>
+                            <optgroup label="UI Designer">
+                                <option value="SR">Sharon</option>
+                                <option value="TM">Timothy</option>
+                                <option value="FD">Frederick</option>
+                                <option value="HN">Henry</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Create Project</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock body %}
-

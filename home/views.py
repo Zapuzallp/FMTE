@@ -126,6 +126,10 @@ class ClientListView(LoginRequiredMixin,ListView):
     context_object_name = 'company'
     login_url = LOGIN_URL
 
+    def get_queryset(self):
+        # Prefetch directors via the DirectorCompanyMapping relationship
+        return Company.objects.prefetch_related('directorcompanymapping_set__Director')
+
 
 class ClientDetailView(LoginRequiredMixin,DetailView):
     model = Company
@@ -135,9 +139,20 @@ class ClientDetailView(LoginRequiredMixin,DetailView):
     slug_url_kwarg = 'id'
     login_url = LOGIN_URL
 
-
 class DirectorsListView(LoginRequiredMixin,ListView):
-    model =Director
+    model = Director
     template_name = 'directors.html'
+    context_object_name = 'directors'
+    login_url = LOGIN_URL
+
+    def get_queryset(self):
+        return Director.objects.prefetch_related('directorcompanymapping_set__company')
+
+
+class DirectorDetailView(LoginRequiredMixin,DetailView):
+    model = Director
+    template_name = 'director_details.html'
     context_object_name = 'director'
+    slug_field = 'd_id'
+    slug_url_kwarg = 'd_id'
     login_url = LOGIN_URL
