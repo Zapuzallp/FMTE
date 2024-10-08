@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {%load static%}
-{% block title %}Client Details| Hyper - Responsive Bootstrap 5 Admin Dashboard{% endblock title %}
+{% block title %}{{company.company_name }} Details{% endblock title %}
 {% block body %}
 
 <!-- Start Content-->
@@ -17,7 +17,7 @@
                             <li class="breadcrumb-item active">Company</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Company</h4>
+                    <h4 class="page-title">{{company.company_name }}</h4>
                 </div>
             </div>
         </div>
@@ -82,7 +82,7 @@
             </div>
         </div>
 
-        <div class="accordion" id="accordionExample">
+        <div class="accordion mb-2" id="accordionExample">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">

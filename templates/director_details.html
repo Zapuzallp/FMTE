@@ -2,7 +2,7 @@
 {%load static%}
 
 
-{% block title %}Director Details| Hyper - Responsive Bootstrap 5 Admin Dashboard{% endblock title %}
+{% block title %}{{ director.name }} Details{% endblock title %}
 
 {% block body %}
 
@@ -97,9 +97,7 @@
                                 </div>
                             </div>
                             <!-- Personal-Information -->
-
                         </div> <!-- end col-->
-
                     </div>
                     <!-- end row -->
 
@@ -111,38 +109,31 @@
                                         <table class="table table-hover table-centered mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th>Director Name</th>
                                                     <th>Company Name</th>
                                                     <th>PAN NUMBER</th>
                                                     <th>Website</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                    {% for mapping in director.directorcompanymapping_set.all %}
                                                     <tr>
-                                                        <td>{{ director.name }}</td>
                                                         <td>
-                                                            {% for mapping in director.directorcompanymapping_set.all %}
-                                                                <a href="{% url 'client_detail' mapping.company.id %}" target="_blank" rel="noopener">{{ mapping.company.company_name }}{% if not forloop.last %}, {% endif %}
-                                                            {% empty %}
-                                                                No Company Assigned
-                                                            {% endfor %}
+                                                            <a href="{% url 'client_detail' mapping.company.id %}" target="_blank" rel="noopener">{{ mapping.company.company_name }}</a>
                                                         </td>
                                                         <td>
-                                                            {% for mapping in director.directorcompanymapping_set.all %}
-                                                                {{ mapping.company.pan_number }}{% if not forloop.last %}, {% endif %}
-                                                            {% empty %}
-                                                                No Company Assigned
-                                                            {% endfor %}
+                                                            {{ mapping.company.pan_number }}
                                                         </td>
                                                         <td>
-                                                            {% for mapping in director.directorcompanymapping_set.all %}
-                                                                <a href="{{ mapping.company.website }}" target="_blank" rel="noopener"> {{ mapping.company.website }}{% if not forloop.last %}, {% endif %}
-                                                            {% empty %}
-                                                                No Company Assigned
-                                                            {% endfor %}
+                                                            <a href="{{ mapping.company.website }}" target="_blank" rel="noopener">{{ mapping.company.website }}</a>
                                                         </td>
                                                     </tr>
-                                                </tbody>
+                                                    {% empty %}
+                                                    <tr>
+                                                        <td colspan="3">No Company Assigned</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                            </tbody>
+
 
                                         </table>
                                     </div> <!-- end table responsive-->
