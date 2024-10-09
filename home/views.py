@@ -1,14 +1,14 @@
 from django.views import View
-from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.conf import settings
 import logging.config
-from .models import ARNTracking
+from .models import ARNTracking, Task, Comment
 from django.http import JsonResponse
 from datetime import datetime
+from django.contrib.auth.models import User
 
 # Apply logging configuration
 logging.config.dictConfig(settings.LOGGING)
@@ -112,3 +112,23 @@ class ARNTrackingListView(LoginRequiredMixin, View):
         except Exception as e:
             error_logger.error('Failed to update ARN status for ARN number %s: %s', arn_number, str(e))
             return JsonResponse({'message': 'Internal server error'}, status=500)  # Internal server error
+
+
+class TaskView(LoginRequiredMixin, View):
+    def get(self, request):
+
+        filtered_tasks = Task.objects.all()
+        comments = Comment.objects.all()
+        users = User.objects.all()
+
+        inprogress_tasks = [task for task in filtered_tasks if task.status == 'In Progress']
+        open_tasks = [task for task in filtered_tasks if task.status == 'Pending']
+        done_tasks = [task for task in filtered_tasks if task.status == 'Completed']
+
+        return render(request, 'task.html', {
+        'In_Progress_tasks': inprogress_tasks,
+        'open_tasks': open_tasks,
+        'done_tasks': done_tasks,
+        'comments': comments,
+        'users': users
+    })

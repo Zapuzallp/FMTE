@@ -1,0 +1,312 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    <div class="content">
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-xxl-8">
+                    <!-- start page title -->
+                    <div class="page-title-box">
+                        <div class="page-title-right">
+                            <form>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <button class="input-group-text btn btn-secondary dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="uil uil-sort-amount-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item" href="#">Due Date</a>
+                                        <a class="dropdown-item" href="#">Added Date</a>
+                                        <a class="dropdown-item" href="#">Assignee</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <h4 class="page-title">Tasks
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#add-new-task-modal"
+                                class="btn btn-success btn-sm ms-3">Add New</a>
+                        </h4>
+                    </div>
+                    <!-- end page title -->
+                    <!--  Add new task modal -->
+                    <div class="modal fade task-modal-content" id="add-new-task-modal" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="NewTaskModalLabel">Create New Task</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="p-2">
+                                        <div class="mb-3">
+                                            <label class="form-label">Project</label>
+                                            <select class="form-select form-control-light">
+                                                <option>Select</option>
+                                                <option>Hyper - Admin Dashboard</option>
+                                                <option>CRM - Design &amp; Development</option>
+                                                <option>iOS - App Design</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="mb-3">
+                                                    <label for="task-title" class="form-label">Title</label>
+                                                    <input type="text" class="form-control form-control-light"
+                                                        id="task-title" placeholder="Enter title">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label for="task-priority2" class="form-label">Priority</label>
+                                                    <select class="form-select form-control-light" id="task-priority2">
+                                                        <option>Low</option>
+                                                        <option>Medium</option>
+                                                        <option>High</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="task-description" class="form-label">Description</label>
+                                            <textarea class="form-control form-control-light" id="task-description"
+                                                rows="3"></textarea>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="task-title" class="form-label">Assign To</label>
+                                                    <select class="form-select form-control-light" id="task-priority">
+                                                        <option>Coderthemes</option>
+                                                        <option>Robert Carlile</option>
+                                                        <option>Louis Allen</option>
+                                                        <option>Sean White</option>
+                                                        <option>Riley Steele</option>
+                                                        <option>Zak Turnbull</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="task-priority" class="form-label">Due Date</label>
+                                                    <input type="text" class="form-control form-control-light"
+                                                        id="birthdatepicker" data-toggle="date-picker"
+                                                        data-single-date-picker="true">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="text-end">
+                                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                                            <button type="button" class="btn btn-primary">Create</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+
+                    <!-- tasks panel -->
+                    <div class="mt-2">
+                        <h5 class="m-0 pb-2">
+                            <a class="text-dark" data-bs-toggle="collapse" href="#InProgressTasks" role="button" aria-expanded="false" aria-controls="InProgressTasks">
+                                <i class="uil uil-angle-down font-18"></i>In Progress <span class="text-muted">({{ In_Progress_tasks|length }})</span>
+                            </a>
+                        </h5>
+
+                        <div class="collapse show" id="InProgressTasks">
+                            <div class="card mb-0">
+                                <div class="card-body">
+
+                                    <!-- task -->
+                                    {% for task in In_Progress_tasks %}
+                                    <div class="row justify-content-sm-between">
+                                        <div class="col-sm-6 mb-2 mb-sm-0">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="task1">
+                                                <label class="form-check-label" for="task1">
+                                                    {{ task.title }}
+                                                </label>
+                                            </div> <!-- end checkbox -->
+                                        </div> <!-- end col -->
+                                        <div class="col-sm-6">
+                                            <div class="d-flex justify-content-between">
+                                                <div id="tooltip-container">
+                                                    {% for assignee in task.assignees.all %}
+                                                    {{ assignee.username }}{% if not forloop.last %}, {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                                <div>
+                                                    <ul class="list-inline font-13 text-end">
+                                                        <li class="list-inline-item">
+                                                            <i class="uil uil-schedule font-16 me-1"></i>
+                                                            {{ task.due_date }}
+                                                        </li>
+                                                        <li class="list-inline-item ms-1">
+                                                            <i class="uil uil-align-alt font-16 me-1"></i> 3/7
+                                                        </li>
+                                                        <li class="list-inline-item ms-1">
+                                                            <i class="uil uil-comment-message font-16 me-1"></i> {{ task.comments.count }}
+                                                        </li>
+                                                        <li class="list-inline-item ms-2">
+                                                            <span {% if task.priority == 'High' %}
+                                                                    class="badge badge-danger-lighten p-1"
+                                                                  {% elif task.priority == 'Medium' %}
+                                                                    class="badge badge-info-lighten p-1"
+                                                                  {% elif task.priority == 'Low' %}
+                                                                    class="badge badge-success-lighten p-1"
+                                                                  {% endif %}> {{ task.priority|title }}
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div> <!-- end .d-flex-->
+                                        </div> <!-- end col -->
+                                    </div>
+                                    {% endfor %}
+                                    <!-- end task -->
+                                </div> <!-- end card-body-->
+                            </div> <!-- end card -->
+                        </div> <!-- end .collapse-->
+                    </div> <!-- end .mt-2-->
+
+                    <!-- pending tasks -->
+                    <div class="mt-4">
+
+                        <h5 class="m-0 pb-2">
+                            <a class="text-dark" data-bs-toggle="collapse" href="#pendingTasks" role="button" aria-expanded="false" aria-controls="pendingTasks">
+                                <i class="uil uil-angle-down font-18"></i>Open <span class="text-muted">({{ open_tasks|length }})</span>
+                            </a>
+                        </h5>
+
+                        <div class="collapse show" id="pendingTasks">
+                            <div class="card mb-0">
+                                <div class="card-body">
+                                    <!-- task -->
+                                    {% for task in open_tasks %}
+                                    <div class="row justify-content-sm-between">
+                                        <div class="col-sm-6 mb-2 mb-sm-0">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="task4">
+                                                <label class="form-check-label" for="task4">
+                                                    {{ task.title }}
+                                                </label>
+                                            </div> <!-- end checkbox -->
+                                        </div> <!-- end col -->
+                                        <div class="col-sm-6">
+                                            <div class="d-flex justify-content-between">
+                                                <div id="tooltip-container3">
+                                                    {% for assignee in task.assignees.all %}
+                                                    {{ assignee.username }}{% if not forloop.last %}, {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                                <div>
+                                                    <ul class="list-inline font-13 text-end">
+                                                        <li class="list-inline-item">
+                                                            <i class="uil uil-schedule font-16 me-1"></i> {{ task.due_date }}
+                                                        </li>
+                                                        <li class="list-inline-item ms-1">
+                                                            <i class="uil uil-align-alt font-16 me-1"></i> 1/12
+                                                        </li>
+                                                        <li class="list-inline-item ms-1">
+                                                            <i class="uil uil-comment-message font-16 me-1"></i> {{ task.comments.count }}
+                                                        </li>
+                                                        <li class="list-inline-item ms-2">
+                                                            <span {% if task.priority == 'High' %}
+                                                                    class="badge badge-danger-lighten p-1"
+                                                                  {% elif task.priority == 'Medium' %}
+                                                                    class="badge badge-info-lighten p-1"
+                                                                  {% elif task.priority == 'Low' %}
+                                                                    class="badge badge-success-lighten p-1"
+                                                                  {% endif %}> {{ task.priority|title }}
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div> <!-- end .d-flex-->
+                                        </div> <!-- end col -->
+                                    </div>
+                                    {% endfor %}
+                                    <!-- end task -->
+                                </div> <!-- end card-body-->
+                            </div> <!-- end card -->
+                        </div> <!-- end collapse-->
+                    </div>
+                    <!-- end pending tasks -->
+
+                    <!-- completed tasks -->
+                    <div class="mt-4 mb-4">
+                        <h5 class="m-0 pb-2">
+                            <a class="text-dark" data-bs-toggle="collapse" href="#completedTasks" role="button" aria-expanded="false" aria-controls="completedTasks">
+                                <i class="uil uil-angle-down font-18"></i>Done <span class="text-muted">({{ done_tasks|length }})</span>
+                            </a>
+                        </h5>
+
+                        <div class="collapse show" id="completedTasks">
+                            <div class="card mb-0">
+                                <div class="card-body">
+                                    <!-- task -->
+                                    {% for task in done_tasks %}
+                                    <div class="row justify-content-sm-between">
+                                        <div class="col-sm-6 mb-2 mb-sm-0">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="task7">
+                                                <label class="form-check-label" for="task7">
+                                                    {{ task.title }}
+                                                </label>
+                                            </div> <!-- end checkbox -->
+                                        </div> <!-- end col -->
+                                        <div class="col-sm-6">
+                                            <div class="d-flex justify-content-between">
+                                                <div id="tooltip-container6">
+                                                    {% for assignee in task.assignees.all %}
+                                                    {{ assignee.username }}{% if not forloop.last %}, {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                                <div>
+                                                    <ul class="list-inline font-13 text-end">
+                                                        <li class="list-inline-item">
+                                                            <i class="uil uil-schedule font-16 me-1"></i>
+                                                            {{ task.due_date }}
+                                                        </li>
+                                                        <li class="list-inline-item ms-1">
+                                                            <i class="uil uil-align-alt font-16 me-1"></i> 5/14
+                                                        </li>
+                                                        <li class="list-inline-item ms-1">
+                                                            <i class="uil uil-comment-message font-16 me-1"></i> {{ task.comments.count }}
+                                                        </li>
+                                                        <li class="list-inline-item ms-2">
+                                                            <span {% if task.priority == 'High' %}
+                                                                    class="badge badge-danger-lighten p-1"
+                                                                  {% elif task.priority == 'Medium' %}
+                                                                    class="badge badge-info-lighten p-1"
+                                                                  {% elif task.priority == 'Low' %}
+                                                                    class="badge badge-success-lighten p-1"
+                                                                  {% endif %}> {{ task.priority|title }}
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div> <!-- end .d-flex-->
+                                        </div> <!-- end col -->
+                                    </div>
+                                    {% endfor %}
+                                    <!-- end completed task -->
+                                </div> <!-- end card-body-->
+                            </div> <!-- end card -->
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- container -->
+        </div>
+    </div>
+{% endblock %}
