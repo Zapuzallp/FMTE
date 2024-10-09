@@ -44,8 +44,8 @@
                                 <div class="modal-body">
                                     <form class="p-2">
                                         <div class="mb-3">
-                                            <label class="form-label">Project</label>
-                                            <select class="form-select form-control-light">
+                                            <label class="form-label" for="projectSelect">Project</label>
+                                            <select class="form-select form-control-light" id="projectSelect">
                                                 <option>Select</option>
                                                 <option>Hyper - Admin Dashboard</option>
                                                 <option>CRM - Design &amp; Development</option>
@@ -118,7 +118,7 @@
                     <!-- tasks panel -->
                     <div class="mt-2">
                         <h5 class="m-0 pb-2">
-                            <a class="text-dark" data-bs-toggle="collapse" href="#InProgressTasks" role="button" aria-expanded="false" aria-controls="InProgressTasks">
+                            <a class="text-dark" data-bs-toggle="collapse" href="#InProgressTasks" role="button" aria-expanded="false" aria-controls="InProgressTasks" onkeydown="if(event.key === 'Enter' || event.key === ' ') { this.click(); }">
                                 <i class="uil uil-angle-down font-18"></i>In Progress <span class="text-muted">({{ In_Progress_tasks|length }})</span>
                             </a>
                         </h5>
@@ -183,7 +183,7 @@
                     <div class="mt-4">
 
                         <h5 class="m-0 pb-2">
-                            <a class="text-dark" data-bs-toggle="collapse" href="#pendingTasks" role="button" aria-expanded="false" aria-controls="pendingTasks">
+                            <a class="text-dark" data-bs-toggle="collapse" href="#pendingTasks" role="button" aria-expanded="false" aria-controls="pendingTasks" onkeydown="if(event.key === 'Enter' || event.key === ' ') { this.click(); }">
                                 <i class="uil uil-angle-down font-18"></i>Open <span class="text-muted">({{ open_tasks|length }})</span>
                             </a>
                         </h5>
@@ -246,7 +246,7 @@
                     <!-- completed tasks -->
                     <div class="mt-4 mb-4">
                         <h5 class="m-0 pb-2">
-                            <a class="text-dark" data-bs-toggle="collapse" href="#completedTasks" role="button" aria-expanded="false" aria-controls="completedTasks">
+                            <a class="text-dark" data-bs-toggle="collapse" href="#completedTasks" role="button" aria-expanded="false" aria-controls="completedTasks" onkeydown="if(event.key === 'Enter' || event.key === ' ') { this.click(); }">
                                 <i class="uil uil-angle-down font-18"></i>Done <span class="text-muted">({{ done_tasks|length }})</span>
                             </a>
                         </h5>
